@@ -5,13 +5,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "",
+    "start":"node src/app.js",
     "dev": "nodemon src/app.js --mode=dev",
     "prod": "nodemon src/app.js --mode=prod",
     "test": "npx mocha test/**/*.test.js"
   },
   "keywords": [],
-  "author": "node src/app",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
