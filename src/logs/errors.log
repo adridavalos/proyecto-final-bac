@@ -2934,3 +2934,6 @@
 {"level":"error","message":"Tue Sep 10 2024 GET /api/sessions/logout?"}
 {"level":"error","message":"Tue Sep 10 2024 GET /login"}
 {"level":"error","message":"Tue Sep 10 2024 GET /static/css/index.css"}
+{"level":"error","message":"Tue Sep 10 2024 GET /login"}
+{"level":"error","message":"Tue Sep 10 2024 GET /static/css/index.css"}
+{"level":"error","message":"Tue Sep 10 2024 GET /api/sessions/ghlogin"}
