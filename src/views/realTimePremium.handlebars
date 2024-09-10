@@ -1,0 +1,199 @@
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/products" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-4">Bienvenido {{user.firstName}} {{user.lastName}}</span>
+      </a>
+      <div class="d-flex align-items-center">
+        <form action="/api/sessions/logout" method="get">
+          <button type="submit" class="btn btn-success">Salir</button>
+        </form>
+      </div>
+    </header>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 m-5 p-3">
+      <h3 class="mb-5">CARGAR PRODUCTO NUEVO</h3>
+      <form id="productForm" class="row g-3 needs-validation border" novalidate enctype="multipart/form-data"> <!-- Modificación aquí -->
+        <div class="col-md-8">
+          <label for="validationCustom01" class="form-label">Titulo</label>
+          <input type="text" class="form-control" id="titulo" name="title" required>
+          <div class="valid-feedback">
+            Correcto!
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Precio</label>
+          <input type="text" class="form-control" id="precio" name="price" required>
+          <div class="valid-feedback">
+            Correcto!
+          </div>
+        </div>
+        <div class="col-md-8">
+          <label for="validationCustom02" class="form-label">Imagen</label>
+          <input type="file" class="form-control" id="thumbnail" name="thumbnail" required> <!-- Cambiado a type="file" -->
+          <div class="valid-feedback">
+            Correcto!
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Codigo</label>
+          <input type="text" class="form-control" id="codigo" name="code" required>
+          <div class="valid-feedback">
+            Correcto!
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Stock</label>
+          <input type="number" class="form-control" id="stock" name="stock" required>
+          <div class="valid-feedback">
+            Correcto!
+          </div>
+        </div>
+        <div class="col-md-4">
+          <select class="form-select" aria-label="Default select example" id="status" name="status" required>
+            <option selected disabled>Estado</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Categoria</label>
+          <input type="text" class="form-control" id="categoria" name="category" required>
+          <div class="valid-feedback">
+            Correcto!
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="validationTextarea" class="form-label">Descripcion</label>
+          <textarea class="form-control" id="descripcion" name="description" placeholder="Ingrese descripcion" required></textarea>
+          <div class="invalid-feedback">
+            Ingrese descripcion
+          </div>
+        </div>
+        <div class="col-12 ml-3">
+          <button class="btn btn-primary mb-3" type="submit">Cargar Producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="grid text-center">
+  <h1>Mis Productos</h1>
+  <div class="row">
+   {{#each products}}
+      <div class="col m-3">
+            <div class="card" style="width: 18rem;">
+              <img src="https://coca-colafemsa.com/wp-content/uploads/2019/12/reflejo_pag1.png" class="card-img-top" alt="productos">
+              <div class="card-body">
+                <h3 class="card-title">{{title}}</h3>
+                <p class="card-text">{{description}}</p>
+                <h5 class="card-title">${{price}}</h5>
+                <a href="#" class="btn btn-primary" onclick="updateProduct('{{_id}}')">Modificar</a>
+                <a class="btn btn-danger" onclick="deleteProduct('{{_id}}')">Eliminar</a>
+              </div>
+            </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center m-3">
+      <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+      <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+      <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+    </ul>
+</nav>
+
+<script
+  src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+  integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+  crossorigin="anonymous"
+></script>
+<script>
+ const serverAddress = `ws://${window.location.hostname}:${window.location.port}`;
+  const socketCient = io(serverAddress);
+  
+  socketCient.on('productsChanged', data => {
+    window.location.reload(); 
+  });
+
+  const productForm = document.getElementById('productForm');
+  productForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+
+    if (!productForm.checkValidity()) {
+      alert('Por favor, complete todos los campos antes de enviar.');
+      productForm.classList.add('was-validated');
+      return;
+    }
+
+    const formData = new FormData(productForm); // Crear FormData desde el formulario
+
+    try {
+      const response = await fetch('/api/products/products', {
+        method: 'POST',
+        body: formData // Enviar el FormData directamente
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('Producto cargado exitosamente.');
+        console.log('Producto cargado exitosamente:', result);
+      } else {
+        alert(`Error al cargar el producto: ${result.message}`);
+        console.error('Error al cargar el producto:', result);
+      }
+    } catch (error) {
+      alert('Error al cargar el producto. Por favor, intente nuevamente más tarde.');
+      console.error('Error:', error);
+    }
+  });
+
+
+  async function deleteProduct(productId) {
+        if (!confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+            return; // Si el usuario cancela la acción, no hacer nada
+        }
+
+        try {
+            const response = await fetch(`/api/products/${productId}`, {
+             
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.ok) {
+                console.log('Producto eliminado exitosamente.');
+                alert('Producto eliminado exitosamente.');
+            } else {
+                console.error('Error al eliminar el producto.');
+                alert('Error al eliminar el producto.');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+            alert('Error en la solicitud.');
+        }
+  }
+  async function updateProduct(productId) {
+  if (!confirm('¿Estás seguro de que deseas modificar este producto?')) {
+    return;
+  }
+
+  try {
+    window.location.href = `/modify/${productId}`;
+  } catch (error) {
+    console.error('Error en la solicitud:', error);
+    alert('Error en la solicitud.');
+  }
+}
+ 
+</script>

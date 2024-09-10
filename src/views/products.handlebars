@@ -1,0 +1,95 @@
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/products" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-4">Bienvenido {{user.firstName}} {{user.lastName}}</span>
+      </a>
+      <div class="d-flex align-items-center">
+        <a href="/api/carts/{{idCart}}" class="btn btn-outline-primary me-2">
+          <i class="bi bi-cart"></i> Carrito
+        </a>
+        <form action="/api/sessions/logout" method="get">
+          <button type="submit" class="btn btn-success">Salir</button>
+        </form>
+      </div>
+    </header>
+  </div>
+<div class="b-example-divider"></div>
+
+<div class="grid text-center">
+  <h1>Productos disponibles</h1>
+  <div class="row">
+    {{#each products}}
+      <div class="col m-3">
+        <div class="card" style="width: 18rem;" id="{{_id}}">
+          <img src="https://coca-colafemsa.com/wp-content/uploads/2019/12/reflejo_pag1.png" class="card-img-top" alt="productos">
+          <div class="card-body">
+            <h3 class="card-title">{{title}}</h3>
+            <p class="card-text">{{description}}</p>
+            <h5 class="card-title">${{price}}</h5>
+            <div class="d-flex justify-content-center align-items-center mb-3">
+              <button class="btn btn-outline-secondary me-2" onclick="decreaseQuantity('{{_id}}')">-</button>
+              <span id="quantity-{{_id}}" class="mx-2">1</span>
+              <button class="btn btn-outline-secondary ms-2" onclick="increaseQuantity('{{_id}}')">+</button>
+            </div>
+            <a class="btn btn-primary" onclick="addToCart('{{../idCart}}', '{{_id}}', getQuantity('{{_id}}'))">Agregar al carrito</a>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+  <nav aria-label="...">
+    <ul class="pagination justify-content-center m-3">
+      <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+      <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+      <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+    </ul>
+  </nav>
+
+
+</div>
+
+<script>
+  function increaseQuantity(productId) {
+    const quantityElement = document.getElementById(`quantity-${productId}`);
+    let quantity = parseInt(quantityElement.innerText);
+    quantityElement.innerText = quantity + 1;
+  }
+
+  function decreaseQuantity(productId) {
+    const quantityElement = document.getElementById(`quantity-${productId}`);
+    let quantity = parseInt(quantityElement.innerText);
+    if (quantity > 1) {
+      quantityElement.innerText = quantity - 1;
+    }
+  }
+
+  function getQuantity(productId) {
+    const quantityElement = document.getElementById(`quantity-${productId}`);
+    return parseInt(quantityElement.innerText);
+  }
+
+  function addToCart(cartId, productId, quantity) {
+    fetch(`/api/carts/${cartId}/product/${productId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ quantity: quantity })
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('Producto agregado al carrito');
+      } else {
+        alert('Error al agregar el producto al carrito');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+</script>

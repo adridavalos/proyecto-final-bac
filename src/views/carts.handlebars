@@ -1,0 +1,134 @@
+<div class="container">
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="/products" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+      <svg class="bi me-2" width="40" height="32">
+        <use xlink:href="#bootstrap"></use>
+      </svg>
+      <span class="fs-4">Bienvenido {{user.firstName}} {{user.lastName}}</span>
+    </a>
+    <div class="d-flex align-items-center">
+      <a href="/api/carts/{{idCart}}" class="btn btn-outline-primary me-2">
+        <i class="bi bi-cart"></i> Carrito
+      </a>
+      <form action="/api/sessions/logout" method="get">
+        <button type="submit" class="btn btn-success">Salir</button>
+      </form>
+    </div>
+  </header>
+</div>
+<div class="b-example-divider"></div>
+<div class="grid text-center">
+  <h1>Mi carrito</h1>
+  <div class="row justify-content-center">
+    {{#each products}}
+      <div class="col-md-3 col-sm-6 m-3">
+        <div class="card" style="width: 100%;">
+          <img src="https://coca-colafemsa.com/wp-content/uploads/2019/12/reflejo_pag1.png" class="card-img-top" alt="productos">
+          <div class="card-body">
+            <h3 class="card-title">{{title}}</h3>
+            <p class="card-text">{{description}}</p>
+            <h5 class="card-title">${{price}}</h5>
+            <h5 class="card-title">Cantidad: {{quantity}}</h5>
+            <a class="btn btn-primary" onclick="removeFromCart('{{../idCart}}', '{{_id}}')">Eliminar</a>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  <div class="mt-4 d-flex justify-content-center">
+    <a class="btn btn-success me-2"onclick="finalizePurcharse('{{idCart}}')">Finalizar Compra</a>
+    <a href="#" class="btn btn-danger" onclick="emptyCart('{{idCart}}')">Vaciar Carrito</a>
+  </div>
+</div>
+
+<script>
+    function removeFromCart(cartId, productId) {
+      fetch(`/api/carts/${cartId}/product/${productId}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Producto eliminado del carrito');
+          location.reload();
+        } else {
+          alert('Error al eliminar el producto del carrito');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    function emptyCart(cartId) {
+      fetch(`/api/carts/${cartId}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Carrito vacío');
+          location.reload();
+        } else {
+          alert('Error al vaciar el carrito');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    function removeFromCart(cartId, productId) {
+      fetch(`/api/carts/${cartId}/product/${productId}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Producto eliminado del carrito');
+          location.reload();
+        } else {
+          alert('Error al eliminar el producto del carrito');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+     function emptyCart(cartId) {
+      fetch(`/api/carts/${cartId}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Carrito vacío');
+          location.reload();
+        } else {
+          alert('Error al vaciar el carrito');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    function finalizePurcharse(cartId) {
+      fetch(`/api/carts/${cartId}/purchase`, {
+        method: 'POST'
+        
+      }).then(response => {
+        return response.json();
+      }).then(data => {
+        console.log(data);
+        if (data.success) {
+          alert('Compra Finalizada');
+          location.reload();
+        }else{
+           alert(data.message || 'No se pudo realizar la compra, Hubo un error o no hay suficiente stock');
+            location.reload();
+        }
+      }).catch(error => {
+        alert('No se pudo realizar la compra');
+        console.error('Error:', error);
+      });
+    }
+
+</script>
+

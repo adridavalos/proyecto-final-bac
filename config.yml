@@ -1,0 +1,42 @@
+config:
+  target: 'http://localhost:5000' # Asegúrate de especificar la URL correcta de tu servidor
+  phases:
+    - duration: 5 # duración total 20 segs
+      arrivalRate: 2 # 10 usuarios virtuales por seg
+  plugins:
+    metrics-by-endpoint: {}
+scenarios:
+  - name: "Products Flow (crear productos)"
+    flow:
+      - log: "get products from mock ruta"
+      - get:
+          url: '/mockingproducts'
+          capture:
+            - json: "$.title"
+              as: "title"
+            - json: "$.description"
+              as: "description"
+            - json: "$.price"
+              as: "price"
+            - json: "$.thumbnail"
+              as: "thumbnail"
+            - json: "$.code"
+              as: "code"
+            - json: "$.stock"
+              as: "stock"
+            - json: "$.status"
+              as: "status"
+            - json: "$.category"
+              as: "category"
+      - log: "Creating product"
+      - post:
+          url: "/api/products"
+          json:
+            title: "{{ title }}"
+            description: "{{ description }}"
+            price: "{{ price }}"
+            thumbnail: "{{ thumbnail }}"
+            code: "{{ code }}"
+            stock: "{{ stock }}"
+            status: "{{ status }}"
+            category: "{{ category }}"

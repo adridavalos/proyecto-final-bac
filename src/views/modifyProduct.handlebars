@@ -1,0 +1,119 @@
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/realtimeproducts" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-4">Bienvenido {{user.firstName}} {{user.lastName}}</span>
+      </a>
+      <div class="d-flex align-items-center">
+        <form action="/api/sessions/logout" method="get">
+          <button type="submit" class="btn btn-success">Salir</button>
+        </form>
+      </div>
+    </header>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 m-5 p-3">
+      <h3 class="mb-5">Modificar Producto</h3>
+      <form id="productForm" class="row g-3 needs-validation border" novalidate>
+        <div class="col-md-8">
+          <label for="titulo" class="form-label">Título</label>
+          <input type="text" class="form-control" id="titulo" value="{{product.title}}" required>
+          <div class="valid-feedback">Correcto!</div>
+        </div>
+        <div class="col-md-4">
+          <label for="precio" class="form-label">Precio</label>
+          <input type="text" class="form-control" id="precio" value="{{product.price}}" required>
+          <div class="valid-feedback">Correcto!</div>
+        </div>
+        <div class="col-md-8">
+          <label for="thumbnail" class="form-label">Imagen</label>
+          <input type="text" class="form-control" id="thumbnail" value="{{product.thumbnail}}" required>
+          <div class="valid-feedback">Correcto!</div>
+        </div>
+        <div class="col-md-4">
+          <label for="codigo" class="form-label">Código</label>
+          <input type="text" class="form-control" id="codigo" value="{{product.code}}" required>
+          <div class="valid-feedback">Correcto!</div>
+        </div>
+        <div class="col-md-4">
+          <label for="stock" class="form-label">Stock</label>
+          <input type="number" class="form-control" id="stock" value="{{product.stock}}" required>
+          <div class="valid-feedback">Correcto!</div>
+        </div>
+        <div class="col-md-4">
+          <label for="status" class="form-label">Estado</label>
+          <select class="form-select" aria-label="Estado" id="status" value="{{product.status}}" required>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="categoria" class="form-label">Categoría</label>
+          <input type="text" class="form-control" id="categoria" value="{{product.category}}" required>
+          <div class="valid-feedback">Correcto!</div>
+        </div>
+        <div class="col-12">
+          <label for="descripcion" class="form-label">Descripción</label>
+          <textarea class="form-control" id="descripcion" placeholder="Ingrese descripción" required>{{product.description}}</textarea>
+          <div class="invalid-feedback">Ingrese descripción</div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary mb-3">Modificar</button>
+          <a href="/realtimeproducts" class="btn btn-danger mb-3">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('productForm').addEventListener('submit', async (evt) => {
+    // Evita que el formulario se envíe si hay campos no válidos
+    evt.preventDefault();
+
+    // Verifica la validez del formulario
+    const productForm = evt.target;
+    if (!productForm.checkValidity()) {
+        alert('Por favor, complete todos los campos antes de enviar.');
+
+        productForm.classList.add('was-validated');
+        return;
+    }
+
+    const title = document.getElementById('titulo').value;
+    const description = document.getElementById('descripcion').value;
+    const price = document.getElementById('precio').value;
+    const thumbnail = document.getElementById('thumbnail').value;
+    const code = document.getElementById('codigo').value;
+    const stock = document.getElementById('stock').value;
+    const status = document.getElementById('status').value;
+    const category = document.getElementById('categoria').value;
+
+    const productId = '{{product._id}}'; // Asume que el ID del producto está disponible en tu plantilla
+
+    try {
+        const response = await fetch(`/api/products/${productId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, description, price, thumbnail, code, stock, status, category })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert('Producto modificado exitosamente.');
+            console.log('Producto modificado exitosamente:', result);
+            window.location.href = '/realtimeproducts';
+        } else {
+            alert(`Error al modificar el producto: ${result.message}`);
+            console.error('Error al modificar el producto:', result);
+        }
+    } catch (error) {
+        alert('Error al modificar el producto. Por favor, intente nuevamente más tarde.');
+        console.error('Error:', error);
+    }
+});
+</script>

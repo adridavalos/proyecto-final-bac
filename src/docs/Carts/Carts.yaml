@@ -1,0 +1,361 @@
+openapi: 3.0.0
+info:
+  title: Cart API
+  description: API for managing carts and products within them
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+paths:
+  /carts:
+    post:
+      summary: Create a new cart
+      responses:
+        '200':
+          description: Cart created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Se creó carrito con éxito
+        '400':
+          description: Error creating cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Error message
+
+  /carts/{cid}:
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Cart ID
+    get:
+      summary: Get products in a cart
+      responses:
+        '200':
+          description: Products in cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        price:
+                          type: number
+                        stock:
+                          type: integer
+                        quantity:
+                          type: integer
+                  idCart:
+                    type: string
+                  user:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      role:
+                        type: string
+        '400':
+          description: Error retrieving cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Error message
+
+    delete:
+      summary: Empty a cart
+      responses:
+        '200':
+          description: Cart emptied successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Carrito vacío
+        '400':
+          description: Error emptying cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Error message
+
+  /carts/{cid}/product/{pid}:
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Cart ID
+      - name: pid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Product ID
+    post:
+      summary: Add a product to a cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 1
+      responses:
+        '200':
+          description: Product added to cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Cart ID
+        '403':
+          description: Forbidden, cannot add own product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  message:
+                    type: string
+                    example: No puedes agregar tu propio producto al carrito
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  message:
+                    type: string
+                    example: Producto no encontrado
+        '400':
+          description: Error adding product to cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Error message
+
+    delete:
+      summary: Remove a product from a cart
+      responses:
+        '200':
+          description: Product removed from cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Product ID
+        '400':
+          description: Error removing product from cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Error message
+
+    put:
+      summary: Update the quantity of a product in a cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 2
+      responses:
+        '200':
+          description: Product quantity updated in cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Cart ID
+        '400':
+          description: Error updating product quantity in cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Error message
+
+  /carts/{cid}/purchase:
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Cart ID
+    post:
+      summary: Finalize purchase for a cart
+      responses:
+        '200':
+          description: Purchase finalized successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Cart ID
+                  message:
+                    type: string
+                  productsToKeep:
+                    type: array
+                    items:
+                      type: object
+                  success:
+                    type: boolean
+        '400':
+          description: Error finalizing purchase
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  message:
+                    type: string
+                  success:
+                    type: boolean
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+                    example: server1
+                  payload:
+                    type: string
+                    example: Error message
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        stock:
+          type: integer
+        quantity:
+          type: integer
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+        role:
+          type: string

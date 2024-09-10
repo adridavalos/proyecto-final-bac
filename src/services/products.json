@@ -1,0 +1,67 @@
+[
+    {
+        "title": "LECHE ",
+        "description": "Descripcion de leche",
+        "price": 2060,
+        "thumbnail": "Sin imagen",
+        "code": "abc122",
+        "stock": 20,
+        "_id": "6655f0866c9883b13800f518",
+        "status": "true",
+        "category": 4
+    },
+    {
+        "title": "AZUCAR",
+        "description": "Descripcion de azucar",
+        "price": 2060,
+        "thumbnail": "Sin imagen",
+        "code": "abc123",
+        "stock": 20,
+        "_id": "6655f0866c9883b13800f51f",
+        "status": "true",
+        "category": 4
+    },
+    {
+        "title": "HUEVOS",
+        "description": "Descripcion de huevos",
+        "price": 2060,
+        "thumbnail": "Sin imagen",
+        "code": "abc124",
+        "stock": 20,
+        "_id": 3,
+        "status": "true",
+        "category": 4
+    },
+    {
+        "title": "producto prueba",
+        "description": "Este es un producto prueba",
+        "price": 2050,
+        "thumbnail": "Sin imagen",
+        "code": "600",
+        "stock": 29,
+        "status": "true",
+        "category": 4,
+        "_id": "6655f0866c9883b13800f523"
+    },
+    {
+        "title": "producto prueba",
+        "description": "Este es un producto prueba",
+        "price": 2050,
+        "thumbnail": "Sin imagen",
+        "code": "690",
+        "stock": 29,
+        "status": "true",
+        "category": 4,
+        "_id": "6655f0866c9883b13800f514"
+    },
+    {
+        "title": "MANTECA",
+        "description": "Descripcion de la manteca",
+        "price": "2500",
+        "thumbnail": "imagen de manteca",
+        "code": "23456ty",
+        "stock": "5",
+        "category": "5",
+        "_id": "6655f0866c9883b13800f51a"
+    }
+]

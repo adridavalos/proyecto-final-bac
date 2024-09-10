@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <div id="alert-message" class="alert alert-success" role="alert">
+    <h4 class="alert-heading">¡Documentos cargados con éxito!</h4>
+    <p id="role-change-message">Tu documento de identidad ha sido cargado correctamente. Serás redirigido al inicio de sesión en breve.</p>
+    <hr>
+    <a href="/login" class="btn btn-primary mt-3">Ir al Inicio de Sesión</a>
+  </div>
+</div>
+
+<script>
+  const uid = "{{id}}"; 
+
+  fetch(`/api/users/${uid}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    const roleChangeMessage = document.getElementById('role-change-message');
+    
+    if (data.message) {
+      roleChangeMessage.textContent = `El rol del usuario ha sido cambiado a ${data.message}.`;
+    }
+  })
+  .catch(error => {
+    console.error('Error al cambiar el rol:', error);
+    const roleChangeMessage = document.getElementById('role-change-message');
+    roleChangeMessage.textContent = 'Ocurrió un error al cambiar el rol del usuario.';
+  });
+</script>
+
