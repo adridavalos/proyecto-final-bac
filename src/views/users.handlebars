@@ -1,0 +1,69 @@
+
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/realtimeproducts" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-4">Bienvenido {{admin.firstName}} {{admin.lastName}}</span>
+      </a>
+      <div class="d-flex align-items-center">
+        <form action="/api/sessions/logout" method="get">
+          <button type="submit" class="btn btn-success">Salir</button>
+        </form>
+      </div>
+    </header>
+</div>
+
+<div class="grid text-center">
+  <h1>TODOS LOS USUARIOS</h1>
+  <div class="row">
+   {{#each filteredUsers}}
+      <div class="col m-3">
+            <div class="card" style="width: 18rem;">
+              <img src="https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg" class="card-img-top" alt="users">
+              <div class="card-body">
+                <h3 class="card-title">{{firstName}}</h3>
+                <h3 class="card-text">{{lastName}}</h3>
+                <h5 class="card-title">{{email}}</h5>
+                 <h5 class="card-title">{{role}}</h5>
+                <button class="btn btn-primary" onclick="modifyRole('{{_id}}')">Modificar Rol</button>
+                <button class="btn btn-danger" onclick="deleteUser('{{_id}}')">Eliminar</button>
+              </div>
+            </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<script>
+   function modifyRole(userId) {
+    fetch(`/api/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.reload();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+    function deleteUser(userId) {
+        if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+            fetch(`api/users/${userId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                window.location.reload(); // Recargar la página para reflejar los cambios
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    }
+</script>

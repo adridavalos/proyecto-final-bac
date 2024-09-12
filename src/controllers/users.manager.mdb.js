@@ -21,7 +21,6 @@ class UsersManager {
       return err.message;
     }
   };
-
   getById = async (id) => {
     try {
       return await usersModel.findById(id).lean();

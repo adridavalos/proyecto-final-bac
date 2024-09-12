@@ -1,0 +1,46 @@
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Gestión de Usuario</h2>
+
+        <!-- Información del usuario -->
+        <div class="card">
+            <div class="card-header">
+                <h4>Información del Usuario</h4>
+            </div>
+            <div class="card-body">
+                <form id="userForm" action="/users/{{user._id}}" method="POST">
+                    <!-- Visualización del nombre y correo del usuario -->
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="firstName" value="{{user.firstName}}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Apellido:</label>
+                        <input type="text" class="form-control" id="lastName" value="{{user.lastName}}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" value="{{user.email}}" disabled>
+                    </div>
+
+                    <!-- Modificar rol del usuario -->
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Rol:</label>
+                        <input type="text" class="form-control" id="role" name="role" value="{{user.role}}">
+                    </div>
+
+                    <!-- Botón para actualizar el rol -->
+                    <button type="submit" class="btn btn-primary">Actualizar Rol</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Botón para eliminar al usuario -->
+        <div class="mt-4">
+            <form id="deleteUserForm" action="/users/{{user._id}}" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn btn-danger">Eliminar Usuario</button>
+            </form>
+        </div>
+    </div>
+</body>
