@@ -4,6 +4,7 @@ import ProductManager from "../controllers/productManager.js";
 import cartManager from "../controllers/cartManager.js";
 import {handlePolicies, current } from "../services/utils.js";
 
+
 const router = Router();
 const manager = new ProductManager();
 const cartsManager = new cartManager();
@@ -36,10 +37,12 @@ router.get("/realtimeproducts", handlePolicies(['admin', 'premium','user']), asy
         user: userModificado,
         idCart: carritoUsu._id.toString()
       });
-
+     
     }else if (user.role === "premium") {
+      
+      
       const userProducts = products.filter(product => 
-        product.owner === user._id.toString()
+        product.owner === user._id
       );
       res.status(200).render("realTimePremium", {
         products: userProducts,

@@ -1,0 +1,223 @@
+[
+    {
+      "title": "Producto 1",
+      "description": "Descripción del producto 1",
+      "price": 10.99,
+      "thumbnail": "https://example.com/image1.jpg",
+      "code": "P001",
+      "stock": 50,
+      "status": true,
+      "category": 1,
+      "owner": "66d7375ebeeffc798edb5a72"
+    },
+    {
+      "title": "Producto 2",
+      "description": "Descripción del producto 2",
+      "price": 15.49,
+      "thumbnail": "https://example.com/image2.jpg",
+      "code": "P002",
+      "stock": 40,
+      "status": true,
+      "category": 1,
+      "owner": "66d7375ebeeffc798edb5a72"
+    },
+    {
+      "title": "Producto 3",
+      "description": "Descripción del producto 3",
+      "price": 25.99,
+      "thumbnail": "https://example.com/image3.jpg",
+      "code": "P003",
+      "stock": 30,
+      "status": true,
+      "category": 2,
+      "owner": "66d7375ebeeffc798edb5a72"
+    },
+    {
+      "title": "Producto 4",
+      "description": "Descripción del producto 4",
+      "price": 7.99,
+      "thumbnail": "https://example.com/image4.jpg",
+      "code": "P004",
+      "stock": 20,
+      "status": true,
+      "category": 2,
+      "owner": "66d7375ebeeffc798edb5a72"
+    },
+    {
+      "title": "Producto 5",
+      "description": "Descripción del producto 5",
+      "price": 12.99,
+      "thumbnail": "https://example.com/image5.jpg",
+      "code": "P005",
+      "stock": 60,
+      "status": true,
+      "category": 1,
+      "owner": "66d7375ebeeffc798edb5a72"
+    },
+    {
+      "title": "Producto 6",
+      "description": "Descripción del producto 6",
+      "price": 18.49,
+      "thumbnail": "https://example.com/image6.jpg",
+      "code": "P006",
+      "stock": 10,
+      "status": true,
+      "category": 3,
+      "owner": "66d7375ebeeffc798edb5a72"
+    },
+    {
+      "title": "Producto 7",
+      "description": "Descripción del producto 7",
+      "price": 19.99,
+      "thumbnail": "https://example.com/image7.jpg",
+      "code": "P007",
+      "stock": 80,
+      "status": true,
+      "category": 2,
+      "owner": "66d7375ebeeffc798edb5a72"
+    },
+    {
+      "title": "Producto 8",
+      "description": "Descripción del producto 8",
+      "price": 22.49,
+      "thumbnail": "https://example.com/image8.jpg",
+      "code": "P008",
+      "stock": 90,
+      "status": true,
+      "category": 3,
+      "owner": "66d7375ebeeffc798edb5a72"
+    },
+    {
+      "title": "Producto 9",
+      "description": "Descripción del producto 9",
+      "price": 13.99,
+      "thumbnail": "https://example.com/image9.jpg",
+      "code": "P009",
+      "stock": 25,
+      "status": true,
+      "category": 1,
+      "owner": "66d7375ebeeffc798edb5a72"
+    },
+    {
+      "title": "Producto 10",
+      "description": "Descripción del producto 10",
+      "price": 29.49,
+      "thumbnail": "https://example.com/image10.jpg",
+      "code": "P010",
+      "stock": 35,
+      "status": true,
+      "category": 4,
+      "owner": "66d7375ebeeffc798edb5a72"
+    },
+    {
+      "title": "Producto 11",
+      "description": "Descripción del producto 11",
+      "price": 10.99,
+      "thumbnail": "https://example.com/image11.jpg",
+      "code": "P011",
+      "stock": 20,
+      "status": true,
+      "category": 1,
+      "owner": "66db502d51118fbefb901261"
+    },
+    {
+      "title": "Producto 12",
+      "description": "Descripción del producto 12",
+      "price": 24.49,
+      "thumbnail": "https://example.com/image12.jpg",
+      "code": "P012",
+      "stock": 45,
+      "status": true,
+      "category": 2,
+      "owner": "66db502d51118fbefb901261"
+    },
+    {
+      "title": "Producto 13",
+      "description": "Descripción del producto 13",
+      "price": 30.99,
+      "thumbnail": "https://example.com/image13.jpg",
+      "code": "P013",
+      "stock": 50,
+      "status": true,
+      "category": 3,
+      "owner": "66db502d51118fbefb901261"
+    },
+    {
+      "title": "Producto 14",
+      "description": "Descripción del producto 14",
+      "price": 17.99,
+      "thumbnail": "https://example.com/image14.jpg",
+      "code": "P014",
+      "stock": 70,
+      "status": true,
+      "category": 4,
+      "owner": "66db502d51118fbefb901261"
+    },
+    {
+      "title": "Producto 15",
+      "description": "Descripción del producto 15",
+      "price": 9.99,
+      "thumbnail": "https://example.com/image15.jpg",
+      "code": "P015",
+      "stock": 60,
+      "status": true,
+      "category": 1,
+      "owner": "66db502d51118fbefb901261"
+    },
+    {
+      "title": "Producto 16",
+      "description": "Descripción del producto 16",
+      "price": 21.49,
+      "thumbnail": "https://example.com/image16.jpg",
+      "code": "P016",
+      "stock": 80,
+      "status": true,
+      "category": 2,
+      "owner": "66db502d51118fbefb901261"
+    },
+    {
+      "title": "Producto 17",
+      "description": "Descripción del producto 17",
+      "price": 14.99,
+      "thumbnail": "https://example.com/image17.jpg",
+      "code": "P017",
+      "stock": 100,
+      "status": true,
+      "category": 1,
+      "owner": "66db502d51118fbefb901261"
+    },
+    {
+      "title": "Producto 18",
+      "description": "Descripción del producto 18",
+      "price": 25.99,
+      "thumbnail": "https://example.com/image18.jpg",
+      "code": "P018",
+      "stock": 15,
+      "status": true,
+      "category": 4,
+      "owner": "66db502d51118fbefb901261"
+    },
+    {
+      "title": "Producto 19",
+      "description": "Descripción del producto 19",
+      "price": 12.49,
+      "thumbnail": "https://example.com/image19.jpg",
+      "code": "P019",
+      "stock": 35,
+      "status": true,
+      "category": 3,
+      "owner": "66db502d51118fbefb901261"
+    },
+    {
+      "title": "Producto 20",
+      "description": "Descripción del producto 20",
+      "price": 28.99,
+      "thumbnail": "https://example.com/image20.jpg",
+      "code": "P020",
+      "stock": 95,
+      "status": true,
+      "category": 2,
+      "owner": "66db502d51118fbefb901261"
+    }
+  ]
+  

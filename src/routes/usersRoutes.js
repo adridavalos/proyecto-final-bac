@@ -16,7 +16,7 @@ const transport = nodemailer.createTransport({
 const router = Router();
 const User = new usersManager();
 
-router.put('/:uid', async (req, res) => {
+router.put('/:uid',handlePolicies(['admin']), async (req, res) => {
     const { uid } = req.params;
 
     try {
@@ -77,7 +77,7 @@ router.post('/:uid/documents', uploader.array('documents', 3), async(req,res)=>{
 
 });
 
-router.get('/', async (req, res) => {
+router.get('/', handlePolicies(['admin']),async (req, res) => {
     if (!req.session.user) return res.redirect("/login");
     try {
         const admin = current(req);
@@ -133,6 +133,18 @@ router.get('/gestion', async(req,res)=>{
     res.status(200).render("admin-user-view");
 })
 router.delete('/:uid',async (req, res) =>{
+    const { uid } = req.params;
+
+    try {
+        const result = await User.delete({ _id: uid });
+        if (!result) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        res.status(200).json({ message: 'Usuario eliminado exitosamente' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error al eliminar el usuario', error });
+    }
 
 })
 export default router;

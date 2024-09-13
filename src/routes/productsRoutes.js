@@ -1,8 +1,19 @@
-import { Router } from "express";
+import { response, Router } from "express";
 import ProductManager from "../controllers/productManager.js";
 import config from '../config.js';
-import { handlePolicies,verifyRequiredBody, current } from "../services/utils.js";
+import { handlePolicies, current } from "../services/utils.js";
 import { uploader } from "../services/uploader.js";
+import nodemailer from 'nodemailer';
+
+
+const transport = nodemailer.createTransport({
+  service: 'gmail',
+  port: 587,
+  auth: {
+      user: config.GMAIL_APP_USER,
+      pass: config.GMAIL_APP_PASS
+  }
+});
 
 const router = Router();
 const manager = new ProductManager();
@@ -88,7 +99,7 @@ router.delete('/:pid', handlePolicies(['admin', 'premium']), async (req, res) =>
   try {
     const { pid } = req.params;
     const user = current(req);
-    const product = await manager.getById(pid);
+    const product = await manager.getById(pid); 
 
     if (!product) {
       return res.status(404).send({
@@ -97,26 +108,45 @@ router.delete('/:pid', handlePolicies(['admin', 'premium']), async (req, res) =>
       });
     }
 
+    const socketServer = req.app.get('socketServer'); 
     if (user.role === "admin") {
-      const socketServer = req.app.get('socketServer'); 
+      
       const result = await manager.delete({ _id: pid });
+
+      const confirmation = await transport.sendMail({
+        from: `Sistema Coder <${config.GMAIL_APP_USER}>`,
+        to: 'adavalos654@gmail.com',
+        subject: 'Producto eliminado',
+        text: `El producto con ID ${pid} ha sido eliminado del sistema.`
+      });
+
+      res.status(200).send({
+        status: "ok",
+        origin: "server1",
+        message: "Producto eliminado exitosamente.",
+        
+      });
 
       socketServer.emit('productsChanged', { message: 'Producto eliminado' });
 
-      res.status(200).send({
-        origin: "server1",
-        message: "Producto eliminado exitosamente."
-      });
     } else if (user.role === "premium" && user._id === product.owner) {
-      const socketServer = req.app.get('socketServer'); 
-      const result = await manager.delete({ _id: pid });
+        const result = await manager.delete({ _id: pid });
+        
 
-      socketServer.emit('productsChanged', { message: 'Producto eliminado' });
+        const confirmation = await transport.sendMail({
+          from: `Sistema Coder <${config.GMAIL_APP_USER}>`,
+          to: user.email,
+          subject: 'Producto eliminado',
+          text: `Tu producto con ID ${pid} ha sido eliminado exitosamente del sistema.`
+        });
+      
+        res.status(200).send({
+          status: "ok",
+          origin: "server1",
+          message: "Producto eliminado exitosamente y correo enviado al propietario."
+        });
+        socketServer.emit('productsChanged', { message: 'Producto eliminado' });
 
-      res.status(200).send({
-        origin: "server1",
-        message: "Producto eliminado exitosamente."
-      });
     } else {
       res.status(403).send({
         origin: "server1",
@@ -132,6 +162,7 @@ router.delete('/:pid', handlePolicies(['admin', 'premium']), async (req, res) =>
     });
   }
 });
+
 
 
 router.all('*', async(req,res)=>{

@@ -14,7 +14,7 @@ class ProductDTO {
 class ProductsManager {
   constructor() {}
 
-  getAll = async (limit = 10,page = 1,query, sort) => {
+  getAll = async (limit = 100,page = 1,query, sort) => {
     try {
       return await service.getAll(limit,page,query,sort);
     } catch (err) {

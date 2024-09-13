@@ -135,12 +135,12 @@
       return;
     }
 
-    const formData = new FormData(productForm); // Crear FormData desde el formulario
+    const formData = new FormData(productForm); 
 
     try {
       const response = await fetch('/api/products/products', {
         method: 'POST',
-        body: formData // Enviar el FormData directamente
+        body: formData
       });
 
       const result = await response.json();
@@ -170,30 +170,32 @@
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             });
-
-            if (response.ok) {
-                console.log('Producto eliminado exitosamente.');
-                alert('Producto eliminado exitosamente.');
-            } else {
-                console.error('Error al eliminar el producto.');
+            console.log(response)
+            if (response.status) {
+              const data = await response.json();
+              console.log('Respuesta del servidor:', data);
+              alert('Producto eliminado exitosamente.');
+            }else {
+                const errorData = await response.text();
+                console.error('Error al eliminar el producto:', errorData);
                 alert('Error al eliminar el producto.');
             }
-        } catch (error) {
+        }catch (error) {
             console.error('Error en la solicitud:', error);
             alert('Error en la solicitud.');
         }
-  }
+  };
   async function updateProduct(productId) {
-  if (!confirm('¿Estás seguro de que deseas modificar este producto?')) {
-    return;
-  }
+    if (!confirm('¿Estás seguro de que deseas modificar este producto?')) {
+      return;
+    }
 
-  try {
-    window.location.href = `/modify/${productId}`;
-  } catch (error) {
-    console.error('Error en la solicitud:', error);
-    alert('Error en la solicitud.');
+    try {
+      window.location.href = `/modify/${productId}`;
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+      alert('Error en la solicitud.');
+    }
   }
-}
  
 </script>

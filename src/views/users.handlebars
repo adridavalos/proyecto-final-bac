@@ -55,13 +55,13 @@
 
     function deleteUser(userId) {
         if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
-            fetch(`api/users/${userId}`, {
+            fetch(`/api/users/${userId}`, {
                 method: 'DELETE'
             })
             .then(response => response.json())
             .then(data => {
                 alert(data.message);
-                window.location.reload(); // Recargar la página para reflejar los cambios
+                window.location.reload();
             })
             .catch(error => console.error('Error:', error));
         }
