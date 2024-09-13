@@ -146,9 +146,7 @@
         body: formData
       });
 
-      const result = await response.json();
-
-      if (response.ok) {
+      if (response.status) {
         alert('Producto cargado exitosamente.');
         console.log('Producto cargado exitosamente:', result);
       } else {

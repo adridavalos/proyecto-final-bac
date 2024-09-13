@@ -3439,3 +3439,13 @@
 {"level":"error","message":"Fri Sep 13 2024 GET /api/sessions/logout?"}
 {"level":"error","message":"Fri Sep 13 2024 GET /login"}
 {"level":"error","message":"Fri Sep 13 2024 GET /static/css/index.css"}
+{"level":"error","message":"Fri Sep 13 2024 GET /login"}
+{"level":"error","message":"Fri Sep 13 2024 GET /static/css/index.css"}
+{"level":"error","message":"Fri Sep 13 2024 POST /api/sessions/login"}
+{"level":"error","message":"Fri Sep 13 2024 GET /products"}
+{"level":"error","message":"Fri Sep 13 2024 GET /static/css/index.css"}
+{"level":"error","message":"Fri Sep 13 2024 GET /realtimeproducts"}
+{"level":"error","message":"Fri Sep 13 2024 GET /static/css/index.css"}
+{"level":"error","message":"Fri Sep 13 2024 POST /api/products/products"}
+{"level":"error","message":"Fri Sep 13 2024 GET /realtimeproducts"}
+{"level":"error","message":"Fri Sep 13 2024 GET /static/css/index.css"}

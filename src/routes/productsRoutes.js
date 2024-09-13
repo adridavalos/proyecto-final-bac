@@ -56,16 +56,15 @@ router.post("/products", handlePolicies(['admin', 'premium']),uploader.single('t
         owner: user._id,
         thumbnail: req.file ? req.file.path : ''
       };
-
       const id = await manager.add(product); 
 
-      socketServer.emit("productsChanged", product);
-
       res.status(200).json({
+        status: "ok",
         origin: "server1",
         message: "Producto agregado exitosamente",
         product: product,
       });
+      socketServer.emit("productsChanged", product);
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({
@@ -127,7 +126,7 @@ router.delete('/:pid', handlePolicies(['admin', 'premium']), async (req, res) =>
         
       });
 
-      socketServer.emit('productsChanged', { message: 'Producto eliminado' });
+       socketServer.emit('productsChanged', { message: 'Producto eliminado' });
 
     } else if (user.role === "premium" && user._id === product.owner) {
         const result = await manager.delete({ _id: pid });
